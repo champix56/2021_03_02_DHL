@@ -26,6 +26,7 @@ body {
 }
 #formulaire-de-saisie textarea {
   width: 98%;
+  resize: none;
 }
 #post-it-liste {
   overflow-y: scroll;
