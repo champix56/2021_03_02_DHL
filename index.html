@@ -11,7 +11,49 @@
 <body>
     <div id="main-content">
         <div id="formulaire-de-saisie">
-            formulaire de saisie
+            <form action="" method="GET" name="mon-form">
+                <table>
+                    <tr>
+                        <td><label for="form-titre">Titre de la note</label></td>
+                        <td><input type="text" name="form-titre" id="form-titre" /></td>
+                    </tr>
+                    <tr>
+                        <td><label for="form-auteur">auteur</label></td>
+                        <td>
+                            <select name="form-auteur" id="form-auteur">
+                                <option value="0">Louise</option>
+                                <option value="1">Alex</option>
+                                <option value="2">thomas</option>
+                                <option value="3">cedric</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="form-hour">Date et heure</label></td>
+                        <td>le <input type="date" name="form-date" id="form-date" /><br/>à <input type="time"
+                                name="form-hour" id="form-hour" /></td>
+                    </tr>
+                    <tr>
+                        <td><label for="form-mail">email</label></td>
+                        <td><input type="email" name="form-email" id="form-email" /></td>
+                    </tr>
+                    <tr>
+                        <td><label for="form-adresse">adresse</label></td>
+                        <td><input type="text" name="form-adresse" id="form-adresse" /></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><label for="form-description">Description</label></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <textarea name="description" id="form-description" cols="30" rows="10"></textarea>
+                        </td>
+                    </tr>
+                </table>
+
+
+
+            </form>
         </div>
         <hr />
         <div id="post-it-liste">
