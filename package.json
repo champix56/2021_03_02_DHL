@@ -1,0 +1,23 @@
+{
+  "name": "2021_03_02_DHL",
+  "version": "1.0.0",
+  "description": "- puce\r - puce",
+  "main": "index.js",
+  "scripts": {
+    "test": "lite-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/champix56/2021_03_02_DHL.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/champix56/2021_03_02_DHL/issues"
+  },
+  "homepage": "https://github.com/champix56/2021_03_02_DHL#readme",
+  "dependencies": {
+    "lite-server": "^2.6.1"
+  }
+}
