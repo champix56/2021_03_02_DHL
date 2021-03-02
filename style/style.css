@@ -1,5 +1,7 @@
 body {
   height: 100vh;
+  background-image: url(../img/bg.jpg);
+  background-size: 100% 110%;
 }
 #jsLoaded {
   height: 20px;
@@ -16,6 +18,7 @@ body {
   text-align: center;
   height: 470px;
   padding: 10px;
+  background-color: rgba(255, 255,255,0.9);
 }
 #formulaire-de-saisie table {
   width: 100%;
@@ -42,4 +45,7 @@ body {
 #post-it-liste > div:hover {
   box-shadow: 18px 18px 15px grey;
   background-color: #ffffbc;
+}
+hr{
+    border:1px solid #A0A0A0
 }
