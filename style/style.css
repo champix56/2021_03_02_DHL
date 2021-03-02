@@ -14,7 +14,7 @@ body {
   margin-bottom: 10px;
   margin-left: 35vw;
   text-align: center;
-  height: 460px;
+  height: 470px;
   padding: 10px;
 }
 #formulaire-de-saisie table {
@@ -27,6 +27,7 @@ body {
 #post-it-liste {
   overflow-y: scroll;
   display: flexbox;
+  height: calc(100vh - 550px);
 }
 #post-it-liste > div {
   max-height: 300px;
