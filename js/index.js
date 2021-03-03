@@ -16,13 +16,41 @@ function jsIsLoaded() {
 
 jsIsLoaded();
 
-function logFormulaire() {
+function getFormulaire() {
+    //access a la balise form par document.forms
     var formulaire = document.forms['mon-form'];
-    console.log('titre :', formulaire['form-titre'].value);
-    console.log('auteurId :', formulaire['form-auteur'].value);
-    console.log('date :', formulaire['form-date'].value);
-    console.log('heure :', formulaire['form-hour'].value);
-    console.log('adresse :', formulaire['form-adresse'].value);
-    console.log('email', document.querySelector('form #form-email').value);
-    console.log('description', formulaire['form-description'].value);
+    //constitution d'un objet avec les champs issue du forms
+    var unPostIt={
+        titre:formulaire['form-titre'].value,
+        auteurId:formulaire['form-auteur'].value,
+        date:formulaire['form-date'].value,
+        heure:formulaire['form-hour'].value,
+        adresse:formulaire['form-adresse'].value,
+        mail:formulaire['form-email'].value,
+        description:formulaire['form-description'].value
+    }
+    console.log(unPostIt);
+    return unPostIt;
 }
+function makePostIt(postitValues){
+    //recuperation du postit model pour la creation des autres postit a remplir
+    //clone permet d'obtenir un double non lié a l'element d'origine
+    var postitNode=document.querySelector('.post-it').cloneNode(true);
+    //composition d'un post it rempli avec les valeurs recus en argument d'entree de fonction
+    postitNode.querySelector('.post-it-titre').innerText=postitValues.titre;
+    postitNode.querySelector('.post-it-adresse').innerText=postitValues.adresse;
+    postitNode.querySelector('.post-it-mail').innerText=postitValues.mail;
+    postitNode.querySelector('.post-it-date').innerText='Le '+postitValues.date+' a '+postitValues.heure;
+    postitNode.querySelector('.post-it-description').innerText=postitValues.description;
+    postitNode.querySelector('.post-it-auteur').innerText=postitValues.auteurId;
+
+    //ajout à la fin de la liste du postit cloné et rempli 
+    document.querySelector('#post-it-liste').append(postitNode);
+}
+function onformsubmit(evt){
+    evt.preventDefault();
+   var postitValues = getFormulaire();
+   makePostIt(postitValues);
+   evt.target.reset();
+}
+document.forms['mon-form'].addEventListener('submit',onformsubmit);
