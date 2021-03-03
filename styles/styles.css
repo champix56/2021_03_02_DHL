@@ -83,3 +83,24 @@ body {
     overflow-y: auto;
     height:75px;
 }
+
+@media print{
+    body{
+        background-image: none;
+    }
+    #jsLoaded, #formulaire-de-saisie, hr{
+        display: none;
+    }
+    .post-it{
+        height: auto;
+        width:6cm;
+    }
+    #post-it-liste{
+        height :auto;
+        overflow-y: unset;
+    }
+    .post-it-description{
+        margin-top: 1cm;
+        height:auto;
+    }
+}
