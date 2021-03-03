@@ -8,3 +8,5 @@ jsloaded.style.backgroundColor="green";
 jsloaded.innerText="Le js est chargé";
 
 console.log("Le fichier index.js a fini d'etre executer");
+
+console.log('essaie');
