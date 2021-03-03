@@ -1,0 +1,29 @@
+body {
+  background-image: url(../img/bg.jpg);
+  background-size: 100% 185%;
+}
+#formulaire-de-saisie {
+  width: 400px;
+
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15px;
+  margin-bottom: 15px;
+
+  border: 1px solid black;
+  background-color: aliceblue;
+}
+
+#formulaire-de-saisie table {
+  width: 100%;
+}
+#formulaire-de-saisie td {
+  width: 50%;
+}
+#formulaire-de-saisie textarea{
+    width:98%;
+    resize: none;
+}
+.align-right{
+    text-align: right;
+}
