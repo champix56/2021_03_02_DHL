@@ -6,6 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mon App . js</title>
+    
+    <!-- Latest compiled and minified CSS & JS -->
+    <link rel="stylesheet" media="screen" href="//netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script src="//code.jquery.com/jquery.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    
+    <link rel="stylesheet" href="style/style.css">
 </head>
 
 <body>
@@ -40,7 +47,7 @@
                     </tr>
                     <tr>
                         <td><label for="form-adresse">adresse</label></td>
-                        <td><input type="text" name="form-adresse" id="form-adresse" /></td>
+                        <td style="vertical-align: middle;"><input type="text" name="form-adresse" id="form-adresse" /><button type="button" class="glyphicon glyphicon-screenshot"></button></td>
                     </tr>
                     <tr>
                         <td colspan="2"><label for="form-description">Description</label></td>
@@ -51,8 +58,8 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><input type="reset" value="clear"></td>
-                        <td><button type="submit">Save <span style="color:red">postit</span> </button></td>
+                        <td><input class="btn btn-warning" type="reset" value="clear"></td>
+                        <td><button class="btn btn-success" type="submit">Save <span style="color:red">postit</span> </button></td>
                     </tr>
                 </table>
             </form>
