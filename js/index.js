@@ -32,6 +32,10 @@ function getFormulaire() {
     console.log(unPostIt);
     return unPostIt;
 }
+/**
+ * Clone d'un postit modele et remplissage des valeurs puis ajout à la liste
+ * @param {Postit} postitValues objet comprennant les valeurs d'un postit a afficher
+ */
 function makePostIt(postitValues){
     //recuperation du postit model pour la creation des autres postit a remplir
     //clone permet d'obtenir un double non lié a l'element d'origine
@@ -49,8 +53,8 @@ function makePostIt(postitValues){
 }
 function onformsubmit(evt){
     evt.preventDefault();
-   var postitValues = getFormulaire();
-   makePostIt(postitValues);
-   evt.target.reset();
+    var postitValues = getFormulaire();
+    makePostIt(postitValues);
+    evt.target.reset();
 }
 document.forms['mon-form'].addEventListener('submit',onformsubmit);
