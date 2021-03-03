@@ -1,6 +1,7 @@
 body {
   background-image: url(../img/bg.jpg);
   background-size: 100% 185%;
+  height: 98vh;
 }
 #formulaire-de-saisie {
   width: 400px;
@@ -11,7 +12,8 @@ body {
   margin-bottom: 15px;
 
   border: 1px solid black;
-  background-color: aliceblue;
+  background-color: hsla(0, 0%, 100%, 0.8);
+  /* background-color: rgba(255, 255, 255, 0.8); */
 }
 
 #formulaire-de-saisie table {
@@ -26,4 +28,55 @@ body {
 }
 .align-right{
     text-align: right;
+}
+
+.btn{
+    padding:5px 10px;
+    border:none;
+    border-radius: 6px;
+    font-weight: 700;
+    margin:5px;
+    box-shadow: 7px 7px 10px grey;
+}
+.btn-success{
+    background-color: green;
+    color:white;
+}
+.btn-error{
+    background-color: tomato;
+    color:white;
+}
+#post-it-liste{
+    text-align: center;
+    /* hauteur du body -(minus) 450px la taille du contenu de la partie haute */
+    height: calc(98vh - 450px);
+    overflow-y: scroll;
+}
+.post-it{
+    width:20%;
+    margin-left: 15px;
+    margin-bottom: 10px;
+    background-color: #FFFFA5;
+    display:inline-block;
+    box-shadow: 15px 15px 20px grey;
+    padding: 7px;
+    text-align: left;
+    vertical-align: top;
+}
+.center{
+    text-align: center;
+}
+.post-it:hover{
+    box-shadow: 7px 7px 20px grey;
+    background-color: #FFFF90;
+}
+.container-close-img{
+    float:right;
+}
+.container-close-img > img{
+    width:32px;
+    height:32px;
+}
+.post-it-description{
+    margin-top: 20px;
 }
