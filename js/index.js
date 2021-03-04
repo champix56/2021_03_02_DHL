@@ -51,15 +51,16 @@ function getFormulaire() {
 }
 /**
  * Clone d'un postit modele et remplissage des valeurs puis ajout à la liste
- * @param {String} postitDOM  Document du template xhtml de la vue postit
+ * @param {Document} postitDOM  Document du template xhtml de la vue postit
  * @param {Postit} postitValues objet comprennant les valeurs d'un postit a afficher
  */
-function makePostIt(postitString, postitValues) {
+function makePostIt(postitDOM, postitValues) {
     /*/recuperation du postit model pour la creation des autres postit a remplir
     //clone permet d'obtenir un double non lié a l'element d'origine
     var postitNode = document.querySelector('.post-it').cloneNode(true);*/
-    var postitNode = document.createElement('div');
-    postitNode.innerHTML=postitString; 
+    var postitNode =document.createElement('div');
+    //postitNode.classList.add('post-it');
+    postitNode.innerHTML= postitDOM.firstChild.outerHTML;
     //composition d'un post it rempli avec les valeurs recus en argument d'entree de fonction
     postitNode.querySelector('.post-it-titre').innerHTML = postitValues.titre;
     postitNode.querySelector('.post-it-adresse').innerHTML = postitValues.adresse;
@@ -114,7 +115,7 @@ function getTemplateView(templateFileName, callback) {
             return;
         }
         //console.log(evt.target);
-        callback(xhr.response);
+        callback(xhr.responseXML);
     };
     //etape 4
     xhr.send();
