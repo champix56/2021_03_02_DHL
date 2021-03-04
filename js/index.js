@@ -51,14 +51,15 @@ function getFormulaire() {
 }
 /**
  * Clone d'un postit modele et remplissage des valeurs puis ajout à la liste
- * @param {Document} postitDOM  Document du template xhtml de la vue postit
+ * @param {String} postitDOM  Document du template xhtml de la vue postit
  * @param {Postit} postitValues objet comprennant les valeurs d'un postit a afficher
  */
-function makePostIt(postitDOM, postitValues) {
+function makePostIt(postitString, postitValues) {
     /*/recuperation du postit model pour la creation des autres postit a remplir
     //clone permet d'obtenir un double non lié a l'element d'origine
     var postitNode = document.querySelector('.post-it').cloneNode(true);*/
-    var postitNode = postitDOM.firstChild;
+    var postitNode = document.createElement('div');
+    postitNode.innerHTML=postitString; 
     //composition d'un post it rempli avec les valeurs recus en argument d'entree de fonction
     postitNode.querySelector('.post-it-titre').innerHTML = postitValues.titre;
     postitNode.querySelector('.post-it-adresse').innerHTML = postitValues.adresse;
@@ -68,7 +69,7 @@ function makePostIt(postitDOM, postitValues) {
     postitNode.querySelector('.post-it-auteur').innerHTML = postitValues.auteurId;
 
     //ajout à la fin de la liste du document de template postit rempli 
-    document.querySelector('#post-it-liste').append(postitNode);
+    document.querySelector('#post-it-liste').append(postitNode.firstChild);
 }
 /**
  * fonction de soumission du formulaire de saisie
@@ -113,7 +114,7 @@ function getTemplateView(templateFileName, callback) {
             return;
         }
         //console.log(evt.target);
-        callback(xhr.responseXML);
+        callback(xhr.response);
     };
     //etape 4
     xhr.send();
