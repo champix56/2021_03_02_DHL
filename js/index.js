@@ -22,7 +22,13 @@ jsIsLoaded();
  */
 function isFormFullFill() {
     for (var input of document.forms['mon-form']) {
-        if(input.value==='')return false;
+        if (input.localName !== 'button' && input.value === '') {
+            input.style.backgroundColor = "tomato";
+            return false;
+        } 
+        else {
+            if (!input.classList.contains('btn')) input.style.backgroundColor = "white";
+        }
     }
     return true;
 }
@@ -62,11 +68,15 @@ function makePostIt(postitValues) {
     //ajout à la fin de la liste du postit cloné et rempli 
     document.querySelector('#post-it-liste').append(postitNode);
 }
+/**
+ * fonction de soumission du formulaire de saisie
+ * @param {FormEvent} evt evenement du formulaire
+ */
 function onformsubmit(evt) {
     //arret de l'execution par defaut de la soumission (rechargement de page)
     evt.preventDefault();
     //si le formulaire est pas rempli je sors de cette fonction
-    if(!isFormFullFill())return;
+    if (!isFormFullFill()) return;
     //recuperation des valeur dans le formulaire
     var postitValues = getFormulaire();
     //creation du postit rempli
@@ -74,4 +84,5 @@ function onformsubmit(evt) {
     //reset du contenu du form
     evt.target.reset();
 }
+//connexion de la fonction de gestion de l'event submit au formulaire
 document.forms['mon-form'].addEventListener('submit', onformsubmit);
