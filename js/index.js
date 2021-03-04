@@ -58,17 +58,19 @@ function makePostIt(postitDOM, postitValues) {
     /*/recuperation du postit model pour la creation des autres postit a remplir
     //clone permet d'obtenir un double non lié a l'element d'origine
     var postitNode = document.querySelector('.post-it').cloneNode(true);*/
-    var postitNode = postitDOM.firstChild;
+    var postitNode = document.createElement('div');
+    //remplissage du contenu de la balise div vide par tout le contenu de la premiere balise de postitDOM
+    postitNode.innerHTML=postitDOM.firstChild.outerHTML;
     //composition d'un post it rempli avec les valeurs recus en argument d'entree de fonction
     postitNode.querySelector('.post-it-titre').innerHTML = postitValues.titre;
     postitNode.querySelector('.post-it-adresse').innerHTML = postitValues.adresse;
     postitNode.querySelector('.post-it-mail').innerHTML = postitValues.mail;
-    postitNode.querySelector('.post-it-date').innerHTML = 'Le ' + postitValues.date + ' a ' + postitValues.heure;
+    postitNode.querySelector('.post-it-date').innerHTML = 'Le <b>' + postitValues.date + '</b> a ' + postitValues.heure;
     postitNode.querySelector('.post-it-description').innerHTML = postitValues.description;
     postitNode.querySelector('.post-it-auteur').innerHTML = postitValues.auteurId;
 
     //ajout à la fin de la liste du document de template postit rempli 
-    document.querySelector('#post-it-liste').append(postitNode);
+    document.querySelector('#post-it-liste').append(postitNode.firstChild);
 }
 /**
  * fonction de soumission du formulaire de saisie
