@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/champix56/2021_03_02_DHL#readme",
   "dependencies": {
+    "json-server": "^0.16.3",
     "lite-server": "^2.6.1"
   }
 }

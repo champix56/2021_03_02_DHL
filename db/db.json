@@ -1,0 +1,24 @@
+{
+    "postits": [
+        {
+            "id": 0,
+            "titre": "titre du postit",
+            "auteurId": 0,
+            "date": "2021-05-02",
+            "heure": "00:00:00",
+            "adresse": "adresse 1",
+            "mail": "me@m.fr",
+            "description": "lorem"
+        }
+    ],
+    "auteurs": [
+        {
+            "id": 0,
+            "name": "Alex"
+        },
+        {
+            "id": 1,
+            "name": "Louise"
+        }
+    ]
+}
