@@ -25,7 +25,7 @@ function isFormFullFill() {
         if (input.localName !== 'button' && input.value === '') {
             input.style.backgroundColor = "tomato";
             return false;
-        } 
+        }
         else {
             if (!input.classList.contains('btn')) input.style.backgroundColor = "white";
         }
@@ -51,21 +51,23 @@ function getFormulaire() {
 }
 /**
  * Clone d'un postit modele et remplissage des valeurs puis ajout à la liste
+ * @param {Document} postitDOM  Document du template xhtml de la vue postit
  * @param {Postit} postitValues objet comprennant les valeurs d'un postit a afficher
  */
-function makePostIt(postitValues) {
-    //recuperation du postit model pour la creation des autres postit a remplir
+function makePostIt(postitDOM, postitValues) {
+    /*/recuperation du postit model pour la creation des autres postit a remplir
     //clone permet d'obtenir un double non lié a l'element d'origine
-    var postitNode = document.querySelector('.post-it').cloneNode(true);
+    var postitNode = document.querySelector('.post-it').cloneNode(true);*/
+    var postitNode = postitDOM.firstChild;
     //composition d'un post it rempli avec les valeurs recus en argument d'entree de fonction
-    postitNode.querySelector('.post-it-titre').innerText = postitValues.titre;
-    postitNode.querySelector('.post-it-adresse').innerText = postitValues.adresse;
-    postitNode.querySelector('.post-it-mail').innerText = postitValues.mail;
-    postitNode.querySelector('.post-it-date').innerText = 'Le ' + postitValues.date + ' a ' + postitValues.heure;
-    postitNode.querySelector('.post-it-description').innerText = postitValues.description;
-    postitNode.querySelector('.post-it-auteur').innerText = postitValues.auteurId;
+    postitNode.querySelector('.post-it-titre').innerHTML = postitValues.titre;
+    postitNode.querySelector('.post-it-adresse').innerHTML = postitValues.adresse;
+    postitNode.querySelector('.post-it-mail').innerHTML = postitValues.mail;
+    postitNode.querySelector('.post-it-date').innerHTML = 'Le ' + postitValues.date + ' a ' + postitValues.heure;
+    postitNode.querySelector('.post-it-description').innerHTML = postitValues.description;
+    postitNode.querySelector('.post-it-auteur').innerHTML = postitValues.auteurId;
 
-    //ajout à la fin de la liste du postit cloné et rempli 
+    //ajout à la fin de la liste du document de template postit rempli 
     document.querySelector('#post-it-liste').append(postitNode);
 }
 /**
@@ -79,10 +81,42 @@ function onformsubmit(evt) {
     if (!isFormFullFill()) return;
     //recuperation des valeur dans le formulaire
     var postitValues = getFormulaire();
-    //creation du postit rempli
-    makePostIt(postitValues);
+    //construction du postit de facon asynchrone par appel de callback
+    getTemplateView('postit.xhtml',
+        function (responseDocument) {
+            makePostIt(responseDocument,postitValues);
+        }
+    );
     //reset du contenu du form
-    evt.target.reset();
+    //evt.target.reset();
 }
 //connexion de la fonction de gestion de l'event submit au formulaire
 document.forms['mon-form'].addEventListener('submit', onformsubmit);
+
+/**
+ * fonction de recuperation http
+ * @param {*} templateFileName 
+ */
+function getTemplateView(templateFileName, callback) {
+    //etape 1 obtention d'un objet xhr
+    var xhr = new XMLHttpRequest();
+    //etape 2 preparation de la requete
+    xhr.open('GET', 'vues/' + templateFileName);
+    //etape 3 definition du contenu a executer 
+    //à chaques changements d'etat dexecution
+    xhr.onreadystatechange = function (evt) {
+        //requete pas achevé donc sortie de la fonction
+        if (xhr.readyState !== XMLHttpRequest.DONE) return;
+        //status different de OK message puis sortie de fonction
+        if (xhr.status !== 200) {
+            console.log('ERROR XHR ' + xhr.responseURL + ' --> ' + xhr.status + ':' + xhr.statusText);
+            return;
+        }
+        //console.log(evt.target);
+        callback(xhr.responseXML);
+    };
+    //etape 4
+    xhr.send();
+}
+// getTemplateView('postit.html');
+
