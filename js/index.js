@@ -115,7 +115,11 @@ function getTemplateView(templateFileName, callback) {
             return;
         }
         //console.log(evt.target);
-        callback(xhr.responseXML);
+        //constitution d'un Document avec la chaine par un DOMparser
+        var postitDocParser=new DOMParser();
+        var postitDoc=postitDocParser.parseFromString(xhr.responseText,'application/xml');
+
+        callback(postitDoc);
     };
     //etape 4
     xhr.send();
