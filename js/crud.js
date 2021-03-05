@@ -19,7 +19,7 @@ function Crud(adresseSrv) {
      * @param {String} body facultatif String json de l'objet (JSON.stringify(object) ou '{"key":"value"}')
     */
     this.post = function (ressource, callback, body) {
-        callXhr('GET', ressource, callback, body);
+        callXhr('POST', ressource, callback, body);
     }
     /**
      * appel XHR method put
@@ -57,7 +57,8 @@ function Crud(adresseSrv) {
     function callXhr(method, ressource, callback, body, unsuccessCallback) {
         if (undefined === unsuccessCallback) {
             unsuccessCallback = function (XhrCaller) {
-                console.log('%c%s', 'color:red;font-size:32pt;font-weight:900', 'Erreur XHR -->' + XhrCaller.status + ':' + XhrCaller.statusText)
+                //css dans la console
+                console.error('%c%s', 'color:red;font-size:32pt;font-weight:900', 'Erreur XHR -->' + XhrCaller.status + ':' + XhrCaller.statusText)
             }
         }
         var xhr = new XMLHttpRequest();
@@ -83,4 +84,3 @@ function Crud(adresseSrv) {
     }
 
 }
-var crud = new Crud('http://localhost:5629');
