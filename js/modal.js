@@ -32,8 +32,9 @@ function showModal(message, actionOk, actionCancel) {
     btnOk.className = 'btn btn-success';
     //j'ajoute l'evenement lié au boutton ok
     btnOk.addEventListener('click', function (evt) {
-        //fermeture de la fenetre
+        //fermeture de la fenetre (3eme niveau au dessus du boutton qui a ete cliqué)
         evt.path[3].remove()
+        //execution de la callback d'action ok
         actionOk();
     });
     //j'ajoute le bouton ok a la div #modal-button
