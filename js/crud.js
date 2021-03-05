@@ -54,7 +54,12 @@ function Crud(adresseSrv) {
      * @param {Function} callback function
      * @param {String?} body facultatif String json de l'objet (JSON.stringify(object) ou '{"key":"value"}')
      */
-    function callXhr(method, ressource, callback, body) {
+    function callXhr(method, ressource, callback, body, unsuccessCallback) {
+        if (undefined === unsuccessCallback) {
+            unsuccessCallback = function (XhrCaller) {
+                console.log('%c%s', 'color:red;font-size:32pt;font-weight:900', 'Erreur XHR -->' + XhrCaller.status + ':' + XhrCaller.statusText)
+            }
+        }
         var xhr = new XMLHttpRequest();
         xhr.open(method, adresseSrv + ressource);
         //le contenu envoyée
@@ -66,7 +71,10 @@ function Crud(adresseSrv) {
             //requete en cours
             if (xhr.readyState < XMLHttpRequest.DONE) return;
             //requete en erreur
-            if (xhr.status !== 200 && xhr.status !== 201) return;
+            if (xhr.status !== 200 && xhr.status !== 201) {
+                unsuccessCallback(xhr)
+                return;
+            }
             //requete achevée et sans erreur
             callback(xhr.response);
         }
