@@ -1,3 +1,6 @@
+var srvAdresse = 'http://localhost:5629';
+var postItCrud = new Crud(srvAdresse);
+
 function jsIsLoaded() {
     // chargement dans une variable de la balise <div id="jsLoaded">...</div>
     var jsloaded = document.querySelector("#jsLoaded");
@@ -60,7 +63,7 @@ function makePostIt(postitDOM, postitValues) {
     var postitNode = document.querySelector('.post-it').cloneNode(true);*/
     var postitNode = document.createElement('div');
     //remplissage du contenu de la balise div vide par tout le contenu de la premiere balise de postitDOM
-    postitNode.innerHTML=postitDOM.firstChild.outerHTML;
+    postitNode.innerHTML = postitDOM.firstChild.outerHTML;
     //composition d'un post it rempli avec les valeurs recus en argument d'entree de fonction
     postitNode.querySelector('.post-it-titre').innerHTML = postitValues.titre;
     postitNode.querySelector('.post-it-adresse').innerHTML = postitValues.adresse;
@@ -68,9 +71,38 @@ function makePostIt(postitDOM, postitValues) {
     postitNode.querySelector('.post-it-date').innerHTML = 'Le <b>' + postitValues.date + '</b> a ' + postitValues.heure;
     postitNode.querySelector('.post-it-description').innerHTML = postitValues.description;
     postitNode.querySelector('.post-it-auteur').innerHTML = postitValues.auteurId;
-
+    postitNode.querySelector('.container-close-img img').addEventListener('dblclick', function (evt) {
+        if (confirm('want you delete postit ?')) {
+            alert('It will (smith) :)');
+            console.log('le click est sur le postit :', postitValues);
+            console.log('le click est sur le DOM node :', evt.currentTarget);
+            postItCrud.del('/postits/' + postitValues.id, function (response) {
+                evt.path[2].remove();
+                console.log('deleted postit on REST server and in DOM :', postitValues);
+            });
+        }
+        // else alert('it will not be delete');
+    });
+    //supression puis mise en affichage dans le form apres suppression pour editer une note
+    postitNode.querySelector('.post-it').addEventListener('dblick',function (evt) {
+        //suppression du postit
+        postItCrud.del('/postits/' + postitValues.id, function (response) {
+           evt.target.remove();
+           //supression du champ id 
+           //delete postitValues.id;
+           putPostItInForm(postitValues);     
+        });
+    });
     //ajout à la fin de la liste du document de template postit rempli 
     document.querySelector('#post-it-liste').append(postitNode.firstChild);
+}
+/**
+ * affiche dans le formulaire les valeurs fournis dans values
+ * @param {Postit} values objet js postit pour remplissage du formulaire 
+ */
+function putPostItInForm(values) {
+    var form=document.forms['mon-form'];
+    form['postit-titre'].value=values.titre;
 }
 /**
  * fonction de soumission du formulaire de saisie
@@ -83,14 +115,20 @@ function onformsubmit(evt) {
     if (!isFormFullFill()) return;
     //recuperation des valeur dans le formulaire
     var postitValues = getFormulaire();
-    //construction du postit de facon asynchrone par appel de callback
-    getTemplateView('postit.xhtml',
-        function (responseDocument) {
-            makePostIt(responseDocument,postitValues);
-        }
-    );
-    //reset du contenu du form
-    //evt.target.reset();
+   //envoie au serveur du postit (ATTENTION le body est une chaine JSON pas un object JS)
+   //JSON.strigify(jsObject) pour convertir un object en chaine json
+    postItCrud.post('/postits', function (responseValues) {
+        //recuperation async (xhr)du template de postit avec fonction de traitement du retour positif
+        getTemplateView('postit.xhtml',
+            function (responseDocument) {
+                 //construction du postit de facon asynchrone par appel de callback basé sur les valeurs de postit recu par le POST sous forme de chaine JSON
+                 //donc a convertir en js Object grace a JSON.parse(jsonString)
+                makePostIt(responseDocument, JSON.parse(responseValues));
+                //vidange du formulaire
+                evt.target.reset();
+            }
+        );
+    }, JSON.stringify(postitValues));
 }
 //connexion de la fonction de gestion de l'event submit au formulaire
 document.forms['mon-form'].addEventListener('submit', onformsubmit);
@@ -116,8 +154,8 @@ function getTemplateView(templateFileName, callback) {
         }
         //console.log(evt.target);
         //constitution d'un Document avec la chaine par un DOMparser
-        var postitDocParser=new DOMParser();
-        var postitDoc=postitDocParser.parseFromString(xhr.responseText,'application/xml');
+        var postitDocParser = new DOMParser();
+        var postitDoc = postitDocParser.parseFromString(xhr.responseText, 'application/xml');
 
         callback(postitDoc);
     };
@@ -126,3 +164,22 @@ function getTemplateView(templateFileName, callback) {
 }
 // getTemplateView('postit.html');
 
+/**
+ * fonction de chargement de la liste postit et creation des postit dans le dom avec les valeurs recus
+ */
+function loadPostIt() {
+    //appel de la fonction get de l'objet, necessitant une fonction de traitement de la reponse en argument d'entree de l'appel de fonction 
+    postItCrud.get('/postits', function (responseJSON) {
+        //je transforme la chaine json recu en veritable objet javascript
+        var postits = JSON.parse(responseJSON);
+        //je charge le model html d'un postit, appel necessitant une fonction de traitement de la reponse en argument d'entree
+        getTemplateView('postit.xhtml', function (responseDoc) {
+            //dans la liste des postits, pour chaque element 
+            postits.forEach(function (elem) {
+                //je creer le postit pour l'element parcouru du foreach
+                makePostIt(responseDoc, elem);
+            });
+        });
+    });
+}
+loadPostIt();
