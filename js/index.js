@@ -84,7 +84,7 @@ function makePostIt(postitDOM, postitValues) {
         // else alert('it will not be delete');
     });
     //supression puis mise en affichage dans le form apres suppression pour editer une note
-    postitNode.querySelector('.post-it').addEventListener('dblick',function (evt) {
+    postitNode.querySelector('.post-it').addEventListener('dblclick',function (evt) {
         //suppression du postit
         postItCrud.del('/postits/' + postitValues.id, function (response) {
            evt.target.remove();
@@ -101,8 +101,16 @@ function makePostIt(postitDOM, postitValues) {
  * @param {Postit} values objet js postit pour remplissage du formulaire 
  */
 function putPostItInForm(values) {
+    //selection du formulaire
     var form=document.forms['mon-form'];
-    form['postit-titre'].value=values.titre;
+    //attribution de la value pour chacun des champ a partir de la valeur dans l'arg d'entree
+    form['form-titre'].value=values.titre;
+    form['form-date'].value=values.date;
+    form['form-adresse'].value=values.adresse;
+    form['form-email'].value=values.mail;
+    form['form-hour'].value=values.heure;
+    form['form-description'].value=values.description;
+    form['form-auteur'].value=values.auteurId;
 }
 /**
  * fonction de soumission du formulaire de saisie
