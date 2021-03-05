@@ -72,19 +72,24 @@ function makePostIt(postitDOM, postitValues) {
     postitNode.querySelector('.post-it-description').innerHTML = postitValues.description;
     postitNode.querySelector('.post-it-auteur').innerHTML = postitValues.auteurId;
     postitNode.querySelector('.container-close-img img').addEventListener('dblclick', function (evt) {
-        if (confirm('want you delete postit ?')) {
-            alert('It will (smith) :)');
+        evt.stopPropagation();
+        //conrsion du confirm a l'usage d'une modal 
+        //action ok detruit le postit ,  actionCancel vide sans instruction juste pour la creation du button cancel
+        showModal('want you delete postit ?',function(){
+            //alert('It will (smith) :)');
             console.log('le click est sur le postit :', postitValues);
             console.log('le click est sur le DOM node :', evt.currentTarget);
             postItCrud.del('/postits/' + postitValues.id, function (response) {
                 evt.path[2].remove();
                 console.log('deleted postit on REST server and in DOM :', postitValues);
             });
-        }
-        // else alert('it will not be delete');
+        },function(){
+            console.log('cancel');
+        })
     });
     //supression puis mise en affichage dans le form apres suppression pour editer une note
     postitNode.querySelector('.post-it').addEventListener('dblclick',function (evt) {
+        evt.stopPropagation();
         //suppression du postit
         postItCrud.del('/postits/' + postitValues.id, function (response) {
            evt.target.remove();
