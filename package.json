@@ -4,7 +4,9 @@
   "description": "- puce\r - puce",
   "main": "index.js",
   "scripts": {
-    "test": "lite-server"
+    "lite": "lite-server",
+    "json": "json-server -p 5629 db/db.json",
+    "start": "npm run lite | npm run json"
   },
   "repository": {
     "type": "git",
